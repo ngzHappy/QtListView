@@ -34,7 +34,7 @@ AbstractItemWidgetView::closePersistentEditorWidget(const QModelIndex &index){
 	auto * delegate_ = view_->itemDelegate();
 	auto d_ = qobject_cast< AbstractItemWidgetDelegate  *>(delegate_);
 	if (d_) {
-		d_->closePersistentEditorWidget(index);
+		return d_->closePersistentEditorWidget(index);
 	}
 	view_->closePersistentEditor(index);
 }

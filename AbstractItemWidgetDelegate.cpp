@@ -78,7 +78,7 @@ public:
 	__AbstractItemWidgetDelegate::ManagerType manager;
 	bool isPainting = false;
 	bool isOpenCloseWidget = false;
-	std::shared_ptr<bool > isOnDestory;
+	std::shared_ptr< bool > isOnDestory;
 
 	ThisPrivate(AbstractItemWidgetDelegate * s) :super(s),
 		manager(s->getView()){
@@ -257,6 +257,15 @@ AbstractItemWidgetDelegate::openPersistentEditorWidget(const QModelIndex &index)
 	v__->openPersistentEditor(index);
 	return manager.data[index].get()->widget;
 
+}
+
+void AbstractItemWidgetDelegate::closeAllWidgetItem(){
+    for( auto & i:thisp->manager.data ){
+		/*准备关闭所有items*/
+		i.second->widget->beforeWidgetDelete();
+    }
+	/*关闭所有items*/
+    thisp->manager.data.clear();
 }
 
 void 

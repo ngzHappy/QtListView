@@ -1,11 +1,11 @@
-﻿#include "mainwindow.h"
+﻿#include "ItemWidgetView.hpp"
+
+#include "mainwindow.h"
 #include <QApplication>
 
 #include <QListView>
 #include <QStringListModel>
-#include "AbstractItemWidget.hpp"
-#include "AbstractItemWidgetDelegate.hpp"
-#include "AbstractItemWidgetView.hpp"
+ 
 
 #include <QApplication>
 #include <QStringListModel>
@@ -18,39 +18,8 @@
 #include <QDebug>
 #include <QTimer>
 
-class View  :
-        public QListView ,
-        public AbstractItemWidgetView
-{
-    bool isOnChangingStruct = false;
-public:
 
-	QAbstractItemView * getWidgetItemView() const override {
-		return (QAbstractItemView *)this;
-	}
 
-    void beginChangeModelStruct(){
-        if(this->isAbstractItemWidgetViewOnDestory()){return;}
-        isOnChangingStruct=true;
-    }
-    void endChangeModelStruct(){
-        if(this->isAbstractItemWidgetViewOnDestory()){return;}
-        isOnChangingStruct=false;
-    }
-
-public:
-    void paintEvent(QPaintEvent *e) override{
-        if(isOnChangingStruct){return;}
-        QListView::paintEvent(e);
-    }
-    bool viewportEvent(QEvent *event) override{
-
-        if(isOnChangingStruct&&(event->type() == QEvent::Paint)){
-            return true;
-        }
-        return QListView::viewportEvent(event);
-    }
-};
 
 class XWidget : public AbstractItemWidget {
 
@@ -166,7 +135,7 @@ int main(int argc, char *argv[])
 
 	
 
-	View view;
+	ItemWidgetView<QListView> view;
 	auto model = new QStringListModel(&view);
 	{
 		QStringList list_;
@@ -186,7 +155,7 @@ int main(int argc, char *argv[])
 		[&view]() {return new XWidget(&view); },
 		&view));
 	view.setItemWidgetModel(model);
-    view.setSelectionMode(View::ExtendedSelection);
+    view.setSelectionMode(ItemWidgetView<QListView>::ExtendedSelection);
 	view.show();
     
 

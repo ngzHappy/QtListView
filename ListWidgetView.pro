@@ -18,4 +18,5 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     AbstractItemWidget.hpp \
     AbstractItemWidgetView.hpp \
-    AbstractItemWidgetDelegate.hpp
+    AbstractItemWidgetDelegate.hpp \
+    ItemWidgetView.hpp

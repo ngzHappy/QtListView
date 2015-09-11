@@ -66,6 +66,8 @@ public:
 
 	virtual AbstractItemWidget *openPersistentEditorWidget(const QModelIndex &index) const;
 	virtual void closePersistentEditorWidget(const QModelIndex &index) const;
+
+    virtual void closeAllWidgetItem();
 protected:
 	bool event(QEvent * e) override;
 
